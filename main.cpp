@@ -1,4 +1,4 @@
-/* Nombre, apellidos y NIP del (de los) autor(es).
+/* Pablo Ernesto Angusto Delgado 842255 y  Miguel Aréjula Aisa 850068
 */
 
 #include <iostream>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-/* Programa de prueba del módulo multi.hpp que crea un multiconjunto vacío de strings y luego lee un fichero "entrada.txt" 
+/* Programa de prueba del módulo Multi.hpp que crea un multiconjunto vacío de strings y luego lee un fichero "entrada.txt" 
  * con operaciones a realizar con ese multiconjunto, indicadas con la siguiente sintaxis, y escribe en un fichero "salida.txt" 
  * lo indicado según cada opción:
  * A -> añade un ejemplar del string incluido en la siguiente línea y escribe en salida "AÑADIDO string"
