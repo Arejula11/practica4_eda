@@ -34,7 +34,7 @@ int cardinal(Multi<Elemento>& m );
 
 //
 template <typename Elemento>
-void iniciarIterdaor(Multi<Elemento>& m );
+void iniciarIterador(Multi<Elemento>& m );
 
 //
 template <typename Elemento>
@@ -53,6 +53,9 @@ template <typename Elemento>
 void avanza(Multi<Elemento>& m );
 
 //
+template <typename Elemento>
+bool siguiente (Multi<Elemento>& m, Elemento& e, int& num );
+
 
 template <typename Elemento>
 struct Multi{
@@ -62,11 +65,9 @@ struct Multi{
     friend  void quitar<Elemento> (Multi<Elemento>& m, const Elemento& e  );
     friend  int multiplicidad<Elemento> ( Multi<Elemento>& m, const Elemento& e );
     friend  int cardinal<Elemento> (Multi<Elemento>& m  );
-    friend  void iniciarIterdaor<Elemento> ( Multi<Elemento>& m );
+    friend  void iniciarIterador<Elemento> ( Multi<Elemento>& m );
     friend  bool existeSiguiente<Elemento> ( Multi<Elemento>& m );
-    friend  void siguienteElem<Elemento> (Multi<Elemento>& m  );
-    friend  void siguienteNumRep<Elemento> ( Multi<Elemento>& m );
-    friend  void avanza<Elemento> (Multi<Elemento>& m  );
+    friend  bool siguiente<Elemento> (Multi<Elemento>& m, Elemento& e, int& num );
 
     private:
         struct Celda{
@@ -82,8 +83,9 @@ struct Multi{
 
 template <typename Elemento>
 void vacio(Multi<Elemento>& m){
-    m.primero==nullptr;
+    m.primero=nullptr;
     m.tamanyo = 0;
+    m.iter = nullptr;
 }
 
 template <typename Elemento>
@@ -108,19 +110,20 @@ void anyadir(Multi<Elemento>& m, const Elemento& e){
                 m.primero->valor++;
             }else{ // buscar punto de insercción
                 aux=m.primero;
-                while(aux->siguiente && (aux->siguiente)->clave<e){
+                while(aux->siguiente!=nullptr && (aux->siguiente)->clave<e){
                     aux = aux->siguiente;
                 }
                 if(aux->siguiente!=nullptr && e==(aux->siguiente)->clave){
-                    (aux->siguiente)->valor++;
+                    ((aux->siguiente)->valor)++;
                 }else{
                     typename Multi<Elemento>::Celda* nuevo;
-                    nuevo->clave=e;
-                    nuevo->valor++;
+                    nuevo = new typename Multi<Elemento>::Celda;
+                     nuevo->clave=e;
+                    (nuevo->valor)= 1;
                     nuevo->siguiente= aux->siguiente;
                     aux->siguiente = nuevo;
                     m.tamanyo++;
-                }
+                 }
             }
         }
     }
@@ -146,8 +149,8 @@ void quitar(Multi<Elemento>& m, const Elemento& e){
                 while(aux1 == nullptr && !parar){
                     if(e<aux1->clave){
                         parar=true;
-                    }else if(e=aux1->clave){
-                        aux2->siguiente=aux1.siguiente;
+                    }else if(e==aux1->clave){
+                        aux2->siguiente=aux1->siguiente;
                         delete(aux1);
                         parar = true;
                         m.tamanyo--;
@@ -165,13 +168,16 @@ void quitar(Multi<Elemento>& m, const Elemento& e){
 template <typename Elemento>
 int multiplicidad(Multi<Elemento>& m, const Elemento& e){
     typename Multi<Elemento>::Celda* aux;
-    while(aux != nullptr && aux->clave < e){
-        aux = aux->siguietne;
+    aux=m.primero;
+    while(aux ->siguiente!= nullptr && aux->clave < e){
+        aux = aux->siguiente;
     }
-    if(aux != nullptr){
-        if(aux->clave = e){
+    if(aux != nullptr || aux->clave >= e){
+        if(aux->clave == e){
             return (aux->valor);
         }
+    }else{
+        return 0;
     }
 }
 
@@ -183,7 +189,7 @@ int cardinal(Multi<Elemento>& m ){
 
 
 template <typename Elemento>
-void iniciarIterdaor(Multi<Elemento>& m ){
+void iniciarIterador(Multi<Elemento>& m ){
     m.iter->siguiente = m.primero;
 }
 
@@ -194,30 +200,16 @@ bool existeSiguiente(Multi<Elemento>& m ){
 }
 
 
-
-
 template <typename Elemento>
-void siguienteElem(Multi<Elemento>& m, Elemento& e){
+bool siguiente(Multi<Elemento>& m, Elemento& e, int& num){
     if(existeSiguiente(m)){
         e = m.iter->clave;
-    }
-}
-
-
-template <typename Elemento>
-void siguienteNumRep(Multi<Elemento>& m, int& num ){
-    if(existeSiguiente(m)){
         num =  m.iter->valor;
+        m.iter = m.iter->siguiente;
+        return true;
+    }else {
+        return false;
     }
-}
-
-
-template <typename Elemento>
-void avanza(Multi<Elemento>& m ){
-    if(existeSiguiente(m)){
-       m.iter = m.iter->siguiente;
-    }
-
 
 }
 

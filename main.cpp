@@ -21,14 +21,15 @@ using namespace std;
  * */
 
 int main() {
+
     Multi<string> multiconjcad;
     
-	// AQUÍ FALTA COMPLETAR CÓDIGO
+	vacio(multiconjcad);
     
     ifstream inf;
 	inf.open("entrada.txt");
 	ofstream outf;
-	outf.open("salida.txt");
+	outf.open("salida2.txt");
     
     string instruccion;
 	string salto;
@@ -40,7 +41,7 @@ int main() {
             string elemento;
             getline(inf,elemento);
 			
-			// AQUÍ FALTA COMPLETAR CÓDIGO
+			anyadir(multiconjcad,elemento);
 			
             outf << "AÑADIDO " << elemento << endl;
         } else if (instruccion == "Q") {
@@ -50,7 +51,13 @@ int main() {
 			
 			// AQUÍ FALTA COMPLETAR CÓDIGO (hágase lo más eficiente posible, teniendo
 			// en cuenta que la operación cardinal tiene coste constante)
-			
+			if(cardinal(multiconjcad)>0){
+                quitar(multiconjcad,elemento);
+                borrado=true;
+            }else{
+                borrado=false;
+            }
+            
             if (borrado) {
                 outf << "QUITADO " << elemento << endl;
             } else {
@@ -62,18 +69,28 @@ int main() {
 			int multipli;
 			
 			// AQUÍ FALTA COMPLETAR CÓDIGO
+            multipli=multiplicidad(multiconjcad, elemento);
 			
             outf << "MULTIPLICIDAD DE " << elemento << " = " << multipli << endl;
 			
         } else if (instruccion == "L") {
 			int elcardinal;
+            iniciarIterador(multiconjcad);
 			
 			// AQUÍ FALTA COMPLETAR CÓDIGO
-			
+			elcardinal=cardinal(multiconjcad);
+            
             outf << separador << " CARDINAL = " << elcardinal << endl;
 			
             // AQUÍ FALTA COMPLETAR CÓDIGO
-			
+			int num; 
+            string e;
+            while (existeSiguiente(multiconjcad)){
+                if(siguiente(multiconjcad,e, num)){
+                    outf<<e<<" "<<num<<endl;
+                }
+            }
+            
             outf << separador << endl;
         }
     }
