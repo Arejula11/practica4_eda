@@ -4,3 +4,25 @@ AÑADIDO Una
 MULTIPLICIDAD DE una = 2
 AÑADIDO dos
 MULTIPLICIDAD DE dos = 1
+--- CARDINAL = 2
+Una 1
+dos 1
+una 2
+---
+NO QUITADO tres
+MULTIPLICIDAD DE tres = 0
+QUITADO una
+MULTIPLICIDAD DE una = 0
+--- CARDINAL = 1
+Una 1
+dos 1
+---
+AÑADIDO tres
+AÑADIDO cuatro
+AÑADIDO tres
+--- CARDINAL = 3
+Una 1
+cuatro 1
+dos 1
+tres 2
+---

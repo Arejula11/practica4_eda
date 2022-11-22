@@ -47,18 +47,18 @@ int main() {
         } else if (instruccion == "Q") {
             string elemento;
             getline(inf,elemento);
-            bool borrado;
-			
+            
+			int num = cardinal(multiconjcad);
 			// AQUÍ FALTA COMPLETAR CÓDIGO (hágase lo más eficiente posible, teniendo
 			// en cuenta que la operación cardinal tiene coste constante)
-			if(cardinal(multiconjcad)>0){
-                quitar(multiconjcad,elemento);
-                borrado=true;
-            }else{
-                borrado=false;
-            }
+			
+            quitar(multiconjcad,elemento);
+                
             
-            if (borrado) {
+                
+            
+            
+            if (num != cardinal(multiconjcad)) {
                 outf << "QUITADO " << elemento << endl;
             } else {
                 outf << "NO QUITADO " << elemento << endl;

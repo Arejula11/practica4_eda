@@ -136,7 +136,7 @@ void quitar(Multi<Elemento>& m, const Elemento& e){
     typename Multi<Elemento>::Celda* aux1;
     typename Multi<Elemento>::Celda* aux2;
     if(m.primero!=nullptr){
-        if(e>=m.primero->clave){
+        if(!(e<m.primero->clave)){
             if(m.primero->clave==e){
                 aux1=m.primero;
                 m.primero=m.primero->siguiente;
@@ -146,7 +146,7 @@ void quitar(Multi<Elemento>& m, const Elemento& e){
                 bool parar=false;
                 aux1=m.primero->siguiente;
                 aux2=m.primero;
-                while(aux1 == nullptr && !parar){
+                while(aux1 != nullptr && !parar){
                     if(e<aux1->clave){
                         parar=true;
                     }else if(e==aux1->clave){
@@ -176,9 +176,8 @@ int multiplicidad(Multi<Elemento>& m, const Elemento& e){
         if(aux->clave == e){
             return (aux->valor);
         }
-    }else{
-        return 0;
     }
+    return 0;
 }
 
 
@@ -190,7 +189,7 @@ int cardinal(Multi<Elemento>& m ){
 
 template <typename Elemento>
 void iniciarIterador(Multi<Elemento>& m ){
-    m.iter->siguiente = m.primero;
+    m.iter = m.primero;
 }
 
 
