@@ -42,6 +42,8 @@ template <typename Elemento> void iniciarIterador(Multi<Elemento> &m);
 // verdad en caso contrario
 template <typename Elemento> bool existeSiguiente(Multi<Elemento> &m);
 
+//cambiar
+
 // Implementación en un único procedimiento de las operaciones "siguienteElem",
 // "siguienteNumRep" y "avanza". Operacion siguienteElem: multi m -> natural
 // {Devuelve el siguiente elemento a visitar de m (según el orden establecido
@@ -81,6 +83,7 @@ private:
   int tamanyo;
   Celda *primero;
   Celda *iter;
+
 };
 
 // Devuelve un multiconjunto vacío, sin elementos
@@ -98,6 +101,7 @@ void anyadir(Multi<Elemento> &m, const Elemento &e) {
     m.primero->clave = e;
     m.primero->valor = 1;
     m.primero->siguiente = nullptr;
+    m.tamanyo++;
   } else { // no vacia
     typename Multi<Elemento>::Celda *aux;
     aux = nullptr;
@@ -111,6 +115,7 @@ void anyadir(Multi<Elemento> &m, const Elemento &e) {
     } else {
       if (e == m.primero->clave) {
         m.primero->valor++;
+        m.tamanyo++;
       } else { // buscar punto de insercción
         aux = m.primero;
         while (aux->siguiente != nullptr && (aux->siguiente)->clave < e) {
@@ -118,6 +123,7 @@ void anyadir(Multi<Elemento> &m, const Elemento &e) {
         }
         if (aux->siguiente != nullptr && e == (aux->siguiente)->clave) {
           ((aux->siguiente)->valor)++;
+          m.tamanyo++;
         } else {
           typename Multi<Elemento>::Celda *nuevo;
           nuevo = new typename Multi<Elemento>::Celda;
@@ -161,6 +167,7 @@ void quitar(Multi<Elemento> &m, const Elemento &e) {
               m.tamanyo--;
             } else { // sino decrementa valor
               (aux1->valor)--;
+              m.tamanyo--;
             }
             parar = true;
           } else {
@@ -190,17 +197,11 @@ int multiplicidad(Multi<Elemento> &m, const Elemento &e) {
   return 0;
 }
 
-// Devuelve el número total de elementos en "m", contando los repetidos
+// Devuelve el número total de elementos en "m", contando los repetidos //cambiar 
 template <typename Elemento> int cardinal(Multi<Elemento> &m) {
-  int cont = multiplicidad(m, m.primero->clave);
-  typename Multi<Elemento>::Celda *aux;
-  aux = m.primero;
-  while (aux->siguiente != nullptr) {
-    aux = aux->siguiente;
-    cont += multiplicidad(m, aux->clave);
-  }
+  
 
-  return cont;
+  return m.tamanyo;
 }
 
 // Prepara el iterador para que el siguiente elemento a visitar sea el menor de
